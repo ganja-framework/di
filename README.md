@@ -1,0 +1,4 @@
+di
+==
+
+DI Container component
