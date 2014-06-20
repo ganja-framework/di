@@ -32,11 +32,7 @@ version = "0.1.${System.env.BUILD_NUMBER}"
 repositories {
     mavenCentral()
     maven {
-        url "http://jenkins.nixilla.net/nexus/content/repositories/ganja-releases/"
-        credentials {
-            username sonatypeUsername
-            password sonatypePassword
-        }
+        url "https://nixilla.net/nexus/content/groups/public/"
     }
 }
 
@@ -44,7 +40,7 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.3.2'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'cglib:cglib-nodep:2.2.2'
-    compile 'ganja.component:event:0.1.8'
+    compile 'ganja.component:event:0.1.4'
 }
 
 cobertura {
@@ -71,7 +67,7 @@ uploadArchives {
 
     repositories {
         mavenDeployer {
-            repository(url: "${sonatypeUrl}/ganja-releases/") {
+            repository(url: "${sonatypeUrl}/releases/") {
                 authentication(userName: sonatypeUsername, password: sonatypePassword)
             }
             pom.version = version
