@@ -37,10 +37,10 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.2'
+    compile 'org.codehaus.groovy:groovy-all:2.3.6'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'cglib:cglib-nodep:2.2.2'
-    compile 'ganja.component:event:0.1.4'
+    compile 'ganja.component:event:0.1.10'
 }
 
 cobertura {
@@ -89,4 +89,9 @@ uploadArchives {
             }
         }
     }
+}
+
+task runExample(dependsOn: 'classes', type: JavaExec) {
+    main = 'examples.example1'
+    classpath = sourceSets.main.runtimeClasspath
 }

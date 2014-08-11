@@ -12,4 +12,16 @@ class DefinitionSpec extends Specification {
         expect:
         definition instanceof Definition
     }
+
+    void "it can set contructor arguments"() {
+
+        given:
+        def definition = new Definition()
+
+        when:
+        definition.setArguments([property: 'value'])
+
+        then:
+        definition instanceof Definition
+    }
 }
