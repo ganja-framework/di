@@ -43,6 +43,15 @@ dependencies {
     compile 'ganja.component:event:0.1.10'
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.groovy
+}
+
+artifacts {
+    archives sourcesJar
+}
+
 cobertura {
     coverageDirs << file("/build/classes/main")
     coverageSourceDirs = [ sourceSets.main.groovy.srcDirs ]
