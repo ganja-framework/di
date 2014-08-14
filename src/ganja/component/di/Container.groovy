@@ -27,6 +27,11 @@ class Container {
         services[id.toLowerCase()] ?: createService(id.toLowerCase())
     }
 
+    def get(Reference reference) {
+
+        get(reference as String)
+    }
+
     def createService(String id) {
 
         id = id.toLowerCase()
@@ -51,6 +56,7 @@ class Container {
             } catch (GroovyRuntimeException e) {
                 service = classLoader.loadClass(d.getClassName()).newInstance(*arg)
             }
+
         }
         else {
 
@@ -73,13 +79,35 @@ class Container {
     def resolveServices(def input) {
 
         if(input instanceof Iterable) {
+
             return input.collect { resolveServices(it) }
         }
 
+        if(input instanceof Map) {
+
+            return input.collectEntries { resolveServices(it) }
+        }
+
+        if(input instanceof Map.Entry && input.value instanceof Reference) {
+
+            input.setValue(get(input.value))
+            return input
+        }
+
         if(input instanceof Reference) {
-            return get(input as String)
+
+            return get(input)
         }
 
         input
     }
+
+//    void debug() {
+//
+//        println "Services"
+//        services.each { println it}
+//
+//        println "Parameters"
+//        parameters.each { println it }
+//    }
 }
