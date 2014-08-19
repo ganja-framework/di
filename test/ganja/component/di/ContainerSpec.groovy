@@ -124,6 +124,20 @@ class ContainerSpec extends Specification {
         subject instanceof EventObject
     }
 
+    void "it can find services tagged by tag"() {
+
+        given:
+        Container container = new Container()
+        container
+            .register('service', 'java.util.EventObject')
+            .setArguments([ start: new Reference('sub.service'), end: new Reference('sub.service') ])
+            .addTag('listener', [ key: 'value'])
+
+        expect:
+        [ listener: [ key: 'value' ]] == container.findTaggedServiceIds('listener')
+        [:] == container.findTaggedServiceIds('some.tag')
+    }
+
 //    void "it throws exception on circular reference"() {
 //
 //

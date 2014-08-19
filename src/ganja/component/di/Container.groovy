@@ -102,6 +102,15 @@ class Container {
         input
     }
 
+    def findTaggedServiceIds(String tag) {
+
+        Map<String, Object> tags = [:]
+
+        getDefinitions().each { String id, Definition item -> if(item.hasTag(tag)) { tags.put(tag, item.getTag(tag)) } }
+
+        tags
+    }
+
 //    void debug() {
 //
 //        println "Services"
