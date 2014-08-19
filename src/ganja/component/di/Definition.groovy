@@ -4,7 +4,7 @@ class Definition {
 
     String className
     def arguments
-    List<String> tags = []
+    Map<String, Object> tags = [:]
 
     Definition setArguments(def args) {
 
@@ -13,24 +13,54 @@ class Definition {
         this
     }
 
-    void addTag(String tag) {
+    void setTags(List tags) {
 
-        if( ! tags.contains(tag)) {
+        tags.each { Map item ->
 
-            tags.add(tag)
+            String name = item?.name
+
+            if(name) {
+
+                Map attr = [:]
+
+                item.each { key, value ->
+
+                    if(key != 'name') {
+
+                        attr.put(key, value)
+                    }
+                }
+
+                addTag(name, attr)
+            }
+        }
+    }
+
+    void addTag(String tag, Object attributes) {
+
+        if( ! tags.keySet().contains(tag)) {
+
+            tags.put(tag, attributes)
         }
     }
 
     Boolean hasTag(String tag) {
-        tags.contains(tag)
+        tags.keySet().contains(tag)
     }
 
     void clearTags() {
-        tags = []
+        tags = [:]
     }
 
     void clearTag(String tag) {
 
         tags.remove(tag)
+    }
+
+    def getTag(String tag) {
+
+        if(hasTag(tag)) {
+            tags[tag]
+        }
     }
 }

@@ -32,24 +32,27 @@ class DefinitionSpec extends Specification {
         def definition = new Definition()
 
         when:
-        definition.addTag('listener')
+        definition.addTag('listener', [ event: 'some.event', method: 'onEvent' ])
 
         then:
         definition.hasTag('listener')
+        definition.getTag('listener')['event'] == 'some.event'
+        definition.getTag('listener')['method'] == 'onEvent'
 
         when:
         definition.clearTags()
 
         then:
-        definition.getTags() == []
+        definition.getTags() == [:]
 
         when:
-        definition.setTags([ 'listener', 'my.tag' ])
+        definition.setTags([ [ name: 'listener', key: 'value'], [ name: 'my.tag', key: 'other value' ]])
 
         then:
-        definition.getTags() == [ 'listener', 'my.tag' ]
+        definition.getTags().size() == 2
         definition.hasTag('listener')
         definition.hasTag('my.tag')
+        definition.getTag('listener')['key'] == 'value'
 
         when:
         definition.clearTag('my.tag')
