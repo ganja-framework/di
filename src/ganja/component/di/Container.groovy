@@ -1,5 +1,7 @@
 package ganja.component.di
 
+import org.slf4j.LoggerFactory
+
 class Container {
 
     ClassLoader classLoader
@@ -61,6 +63,10 @@ class Container {
         else {
 
             service = classLoader.loadClass(d.getClassName()).newInstance()
+        }
+
+        if(service.metaClass.respondsTo(service, 'setLogger')) {
+            service.setLogger(LoggerFactory.getLogger(service.getClass()))
         }
 
         services[id] = service

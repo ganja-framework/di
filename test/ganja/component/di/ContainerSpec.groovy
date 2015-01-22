@@ -1,6 +1,8 @@
 package ganja.component.di
 
+import org.slf4j.Logger
 import spock.lang.Specification
+import support.Service
 
 class ContainerSpec extends Specification {
 
@@ -136,6 +138,19 @@ class ContainerSpec extends Specification {
         expect:
         [ listener: [ key: 'value' ]] == container.findTaggedServiceIds('listener')
         [:] == container.findTaggedServiceIds('some.tag')
+    }
+
+    void "it can inject logger if service has logger property"() {
+
+        given:
+        Container container = new Container()
+        container.register('service', 'support.Service')
+
+        def subject = container.get('service')
+
+        expect:
+        subject instanceof Service
+        subject.getLogger() instanceof Logger
     }
 
 //    void "it throws exception on circular reference"() {
