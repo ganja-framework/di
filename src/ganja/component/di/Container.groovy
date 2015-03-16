@@ -65,7 +65,7 @@ class Container {
             service = classLoader.loadClass(d.getClassName()).newInstance()
         }
 
-        if(service.metaClass.respondsTo(service, 'setLogger')) {
+        if(service.getMetaClass().respondsTo(service, 'setLogger')) {
             service.setLogger(LoggerFactory.getLogger(service.getClass()))
         }
 
