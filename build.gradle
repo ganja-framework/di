@@ -29,6 +29,17 @@ buildscript {
 sourceCompatibility = 1.7
 version = "0.1.${System.env.BUILD_NUMBER}"
 
+
+if (!hasProperty('sonatypeUsername')) {
+    ext.sonatypeUsername = ''
+}
+if (!hasProperty('sonatypePassword')) {
+    ext.sonatypePassword = ''
+}
+if (!hasProperty('sonatypeUrl')) {
+    ext.sonatypeUrl = ''
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -38,6 +49,7 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.1'
+    compile 'ganja:common:0.1.1'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
     testCompile 'cglib:cglib-nodep:2.2.2'
     compile 'ganja.component:event:0.1.26'
@@ -58,16 +70,6 @@ cobertura {
     coverageSourceDirs = [ sourceSets.main.groovy.srcDirs ]
     coverageFormats = ['xml', 'html']
     coverageExcludes = [ '.*example.*' ]
-}
-
-if (!hasProperty('sonatypeUsername')) {
-    ext.sonatypeUsername = ''
-}
-if (!hasProperty('sonatypePassword')) {
-    ext.sonatypePassword = ''
-}
-if (!hasProperty('sonatypeUrl')) {
-    ext.sonatypeUrl = ''
 }
 
 uploadArchives {

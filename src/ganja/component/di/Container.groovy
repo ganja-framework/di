@@ -1,8 +1,9 @@
 package ganja.component.di
 
+import ganja.common.di.ContainerInterface
 import org.slf4j.LoggerFactory
 
-class Container {
+class Container implements ContainerInterface {
 
     ClassLoader classLoader
 
