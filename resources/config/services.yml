@@ -1,0 +1,13 @@
+parameters:
+
+    test.service.class: support.Service
+    logger.class: org.slf4j.Logger
+
+services:
+
+    logger:
+        class: .logger.class
+
+    test.service:
+        class: .test.service.class
+        arguments: [ logger: $logger ]
