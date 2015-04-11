@@ -23,7 +23,7 @@ class DefinitionParser {
                     Map args = [:]
                     config?.arguments?.each({ String property, String value ->
                         if(value.startsWith('$')) {
-                            args.put(property, new Reference(value))
+                            args.put(property, new Reference(value.substring(1)))
                         }
                         else {
                             args.put(property, value)
