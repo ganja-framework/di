@@ -120,6 +120,7 @@ class Container implements ContainerInterface {
 
     void injectService(String serviceId, def service) {
 
+        register(serviceId, service.getClass().toString())
         services[serviceId] = service
     }
 }
