@@ -118,12 +118,8 @@ class Container implements ContainerInterface {
         tags
     }
 
-//    void debug() {
-//
-//        println "Services"
-//        services.each { println it}
-//
-//        println "Parameters"
-//        parameters.each { println it }
-//    }
+    void injectService(String serviceId, def service) {
+
+        services[serviceId] = service
+    }
 }

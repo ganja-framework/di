@@ -152,4 +152,16 @@ class ContainerSpec extends Specification {
         subject instanceof Service
         subject.getLogger() instanceof Logger
     }
+
+    void 'it accepts injected services ie you can inject existing instances to container'() {
+
+        given:
+        Container container = new Container()
+
+        when:
+        container.injectService('container', container)
+
+        then:
+        container.get('container') == container
+    }
 }
