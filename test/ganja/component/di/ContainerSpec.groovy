@@ -152,9 +152,4 @@ class ContainerSpec extends Specification {
         subject instanceof Service
         subject.getLogger() instanceof Logger
     }
-
-//    void "it throws exception on circular reference"() {
-//
-//
-//    }
 }

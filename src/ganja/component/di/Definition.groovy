@@ -1,6 +1,8 @@
 package ganja.component.di
 
-class Definition {
+import ganja.common.di.DefinitionInterface
+
+class Definition implements DefinitionInterface {
 
     String className
     def arguments

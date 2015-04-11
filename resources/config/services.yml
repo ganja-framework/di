@@ -6,8 +6,11 @@ parameters:
 services:
 
     logger:
-        class: .logger.class
+        class: logger.class
 
     test.service:
-        class: .test.service.class
-        arguments: [ logger: $logger ]
+        class: test.service.class
+        arguments: { logger: $logger, serv: $serv }
+        tags: { name: 'some.listener', callback: 'some value' }
+
+
