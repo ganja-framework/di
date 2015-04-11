@@ -2,7 +2,7 @@ package ganja.component.di.loader
 
 import org.yaml.snakeyaml.Yaml
 
-class YmlFileLoader {
+class YmlFileLoader implements FileLoaderInterface {
 
     Yaml yaml
 
