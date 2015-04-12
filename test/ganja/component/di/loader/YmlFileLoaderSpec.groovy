@@ -28,4 +28,14 @@ class YmlFileLoaderSpec extends Specification {
         FileNotFoundException exception = thrown()
         exception.getMessage() == 'File "/non-existing.yml" has not been found in resources folder'
     }
+
+    void "it can read file given prefix"() {
+
+        given:
+        Yaml yaml = new Yaml()
+        def subject = new YmlFileLoader(yaml: yaml, prefix: 'config')
+
+        expect:
+        println subject.load('services.yml')
+    }
 }

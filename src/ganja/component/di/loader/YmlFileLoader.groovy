@@ -6,7 +6,13 @@ class YmlFileLoader implements FileLoaderInterface {
 
     Yaml yaml
 
+    String prefix
+
     def load(String resource) {
+
+        if(prefix) {
+            resource = sprintf('/%s/%s', [ prefix.replaceAll('[^A-Za-z]',''), resource.replaceAll('^/*','')])
+        }
 
         InputStream input = this.getClass().getResourceAsStream(resource)
 
