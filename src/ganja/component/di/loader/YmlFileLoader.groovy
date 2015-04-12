@@ -4,6 +4,8 @@ import org.yaml.snakeyaml.Yaml
 
 class YmlFileLoader implements FileLoaderInterface {
 
+    def logger
+
     Yaml yaml
 
     String prefix
@@ -13,6 +15,8 @@ class YmlFileLoader implements FileLoaderInterface {
         if(prefix) {
             resource = sprintf('/%s/%s', [ prefix.replaceAll('[^A-Za-z]',''), resource.replaceAll('^/*','')])
         }
+
+        logger?.info("Attempting to load '${resource}' file")
 
         InputStream input = this.getClass().getResourceAsStream(resource)
 
