@@ -109,7 +109,7 @@ class Container implements ContainerInterface {
         input
     }
 
-    def findTaggedServiceIds(String tag) {
+    Map findServiceIdsByTag(String tag) {
 
         Map<String, Object> tags = [:]
 

@@ -136,8 +136,8 @@ class ContainerSpec extends Specification {
             .addTag('listener', [ key: 'value'])
 
         expect:
-        [ service: [ key: 'value' ]] == container.findTaggedServiceIds('listener')
-        [:] == container.findTaggedServiceIds('some.tag')
+        [ service: [ key: 'value' ]] == container.findServiceIdsByTag('listener')
+        [:] == container.findServiceIdsByTag('some.tag')
     }
 
     void "it can inject logger if service has logger property"() {
