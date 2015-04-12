@@ -113,7 +113,7 @@ class Container implements ContainerInterface {
 
         Map<String, Object> tags = [:]
 
-        getDefinitions().each { String id, Definition item -> if(item.hasTag(tag)) { tags.put(tag, item.getTag(tag)) } }
+        getDefinitions().each { String id, Definition item -> if(item.hasTag(tag)) { tags.put(id, item.getTag(tag)) } }
 
         tags
     }

@@ -136,7 +136,7 @@ class ContainerSpec extends Specification {
             .addTag('listener', [ key: 'value'])
 
         expect:
-        [ listener: [ key: 'value' ]] == container.findTaggedServiceIds('listener')
+        [ service: [ key: 'value' ]] == container.findTaggedServiceIds('listener')
         [:] == container.findTaggedServiceIds('some.tag')
     }
 
