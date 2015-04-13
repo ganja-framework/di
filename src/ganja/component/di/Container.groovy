@@ -75,7 +75,7 @@ class Container implements ContainerInterface {
 
                 if(arguments) {
 
-                    service."$method"(arguments)
+                    service."$method"(resolveServices(arguments))
                 }
                 else {
                     service."$method"()
