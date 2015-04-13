@@ -164,4 +164,21 @@ class ContainerSpec extends Specification {
         then:
         container.get('container') == container
     }
+
+    void 'if definition contains method calls, they will be called'() {
+
+        given:
+        Container container = new Container()
+
+        when:
+        container
+            .register('support.service', 'support.Service')
+            .calls('setName', 'test name')
+            .calls('getName')
+
+        def service = container.get('support.service')
+
+        then:
+        service.getName() == 'test name'
+    }
 }

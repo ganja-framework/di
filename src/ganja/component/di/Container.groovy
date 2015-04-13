@@ -70,6 +70,19 @@ class Container implements ContainerInterface {
             service.setLogger(LoggerFactory.getLogger(service.getClass()))
         }
 
+        if(d.methodCalls.size()) {
+            d.methodCalls.each({ String method, def arguments ->
+
+                if(arguments) {
+
+                    service."$method"(arguments)
+                }
+                else {
+                    service."$method"()
+                }
+            })
+        }
+
         services[id] = service
     }
 

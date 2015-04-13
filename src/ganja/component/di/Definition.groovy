@@ -7,10 +7,18 @@ class Definition implements DefinitionInterface {
     String className
     def arguments
     Map<String, Object> tags = [:]
+    Map<String, Object> methodCalls = [:]
 
     Definition setArguments(def args) {
 
         arguments = args
+
+        this
+    }
+
+    Definition calls(String method, def arguments = null) {
+
+        methodCalls.put(method, arguments)
 
         this
     }

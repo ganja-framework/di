@@ -25,6 +25,18 @@ class DefinitionSpec extends Specification {
         definition instanceof Definition
     }
 
+    void "it can call any method on the object"() {
+
+        given:
+        def definition = new Definition()
+
+        when:
+        definition.calls('setSomeValue', 'some value')
+
+        then:
+        definition.methodCalls.size() == 1
+    }
+
     void "it can be tagged"() {
 
 

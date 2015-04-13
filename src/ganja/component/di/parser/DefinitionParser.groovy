@@ -33,6 +33,12 @@ class DefinitionParser {
                     definition.setArguments(args)
                 }
 
+                if(config?.calls && config?.calls?.size()) {
+                    for(item in config?.calls) {
+                        definition.calls(item.method, item?.arguments)
+                    }
+                }
+
                 if(config?.tags) {
                     definition.setTags(config?.tags)
                 }
