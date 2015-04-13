@@ -34,8 +34,17 @@ class DefinitionParser {
                 }
 
                 if(config?.calls && config?.calls?.size()) {
+
                     for(item in config?.calls) {
-                        definition.calls(item.method, item?.arguments)
+
+                        if(item?.arguments && item?.arguments?.startsWith('$')) {
+
+                            definition.calls(item.method, new Reference(item?.arguments))
+                        }
+                        else {
+
+                            definition.calls(item.method, item?.arguments)
+                        }
                     }
                 }
 
