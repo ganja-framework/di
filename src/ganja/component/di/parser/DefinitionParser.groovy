@@ -39,7 +39,7 @@ class DefinitionParser {
 
                         if(item?.arguments && item?.arguments?.startsWith('$')) {
 
-                            definition.calls(item.method, new Reference(item?.arguments))
+                            definition.calls(item.method, new Reference(item?.arguments?.substring(1)))
                         }
                         else {
 
