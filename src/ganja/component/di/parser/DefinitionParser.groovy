@@ -27,8 +27,11 @@ class DefinitionParser {
                         args = [:]
 
                         config?.arguments?.each({ String property, String value ->
-                            if(value.startsWith('$')) {
+                            if (value.startsWith('$')) {
                                 args.put(property, new Reference(value.substring(1)))
+                            }
+                            else if (value.startsWith('.')) {
+                                args.put(property, container.getParameter(value.substring(1)))
                             }
                             else {
                                 args.put(property, value)
@@ -43,6 +46,9 @@ class DefinitionParser {
                         config?.arguments?.each({ String value ->
                             if(value.startsWith('$')) {
                                 args << new Reference(value.substring(1))
+                            }
+                            else if (value.startsWith('.')) {
+                                args << container.getParameter(value.substring(1))
                             }
                             else {
                                 args << value

@@ -81,6 +81,26 @@ class DefinitionParserSpec extends Specification {
         1 * definition.setArguments([ 'test' ])
     }
 
+    void 'it can parse service with list arguments and params references'() {
+
+        given:
+        def subject = new DefinitionParser()
+        ContainerInterface container = Mock() { getParameter('test') >> 'OK' }
+        DefinitionInterface definition = Mock()
+
+        when:
+        subject.parse(
+            [ services: [
+                service1: [ class: 'support.ServiceWithConstructor', arguments: [ '.test' ]]
+            ]],
+            container
+        )
+
+        then:
+        1 * container.register('service1', _) >> definition
+        1 * definition.setArguments([ 'OK' ])
+    }
+
     void 'it can parse service with method calls'() {
 
         given:
