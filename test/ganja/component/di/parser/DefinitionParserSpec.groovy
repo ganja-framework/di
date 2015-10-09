@@ -41,7 +41,7 @@ class DefinitionParserSpec extends Specification {
         1 * container.register('service1', _)
     }
 
-    void 'it can parse service with arguments'() {
+    void 'it can parse service with map arguments'() {
 
         given:
         def subject = new DefinitionParser()
@@ -59,6 +59,26 @@ class DefinitionParserSpec extends Specification {
         then:
         1 * container.register('service1', _) >> definition
         1 * definition.setArguments([ name: 'test'])
+    }
+
+    void 'it can parse service with list arguments'() {
+
+        given:
+        def subject = new DefinitionParser()
+        ContainerInterface container = Mock()
+        DefinitionInterface definition = Mock()
+
+        when:
+        subject.parse(
+            [ services: [
+                service1: [ class: 'support.ServiceWithConstructor', arguments: [ 'test' ]]
+            ]],
+            container
+        )
+
+        then:
+        1 * container.register('service1', _) >> definition
+        1 * definition.setArguments([ 'test' ])
     }
 
     void 'it can parse service with method calls'() {

@@ -18,17 +18,37 @@ class DefinitionParser {
 
                 DefinitionInterface definition = container.register(serviceId, config?.class)
 
-                if(config?.arguments && config?.arguments?.size()) {
+                if(config?.arguments) {
 
-                    Map args = [:]
-                    config?.arguments?.each({ String property, String value ->
-                        if(value.startsWith('$')) {
-                            args.put(property, new Reference(value.substring(1)))
-                        }
-                        else {
-                            args.put(property, value)
-                        }
-                    })
+                    def args
+
+                    if(config?.arguments instanceof Map) {
+
+                        args = [:]
+
+                        config?.arguments?.each({ String property, String value ->
+                            if(value.startsWith('$')) {
+                                args.put(property, new Reference(value.substring(1)))
+                            }
+                            else {
+                                args.put(property, value)
+                            }
+                        })
+                    }
+
+                    if(config?.arguments instanceof List) {
+
+                        args = []
+
+                        config?.arguments?.each({ String value ->
+                            if(value.startsWith('$')) {
+                                args << new Reference(value.substring(1))
+                            }
+                            else {
+                                args << value
+                            }
+                        })
+                    }
 
                     definition.setArguments(args)
                 }
