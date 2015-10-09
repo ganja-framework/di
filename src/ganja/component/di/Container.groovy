@@ -11,7 +11,7 @@ class Container implements ContainerInterface {
     Map<String, Object> services = [:]
     Map<String, String> parameters = [:]
 
-    Definition register(String id, String classNameOrServiceId) {
+    Definition register(String id, def classNameOrServiceId) {
 
         String className = getParameter(classNameOrServiceId) ?: classNameOrServiceId
 
