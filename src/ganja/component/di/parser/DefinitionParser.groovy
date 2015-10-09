@@ -2,6 +2,7 @@ package ganja.component.di.parser
 
 import ganja.common.di.ContainerInterface
 import ganja.common.di.DefinitionInterface
+import ganja.component.di.Parameter
 import ganja.component.di.Reference
 
 class DefinitionParser {
@@ -16,7 +17,11 @@ class DefinitionParser {
 
             if(config?.class) {
 
-                DefinitionInterface definition = container.register(serviceId, config?.class)
+                def c = config?.class?.startsWith('.')
+                    ? new Parameter(config?.class?.substring(1))
+                    : config?.class
+
+                DefinitionInterface definition = container.register(serviceId, c)
 
                 if(config?.arguments) {
 
@@ -27,11 +32,12 @@ class DefinitionParser {
                         args = [:]
 
                         config?.arguments?.each({ String property, String value ->
+
                             if (value.startsWith('$')) {
                                 args.put(property, new Reference(value.substring(1)))
                             }
                             else if (value.startsWith('.')) {
-                                args.put(property, container.getParameter(value.substring(1)))
+                                args.put(property, new Parameter(value.substring(1)))
                             }
                             else {
                                 args.put(property, value)
@@ -44,14 +50,15 @@ class DefinitionParser {
                         args = []
 
                         config?.arguments?.each({ String value ->
+
                             if(value.startsWith('$')) {
-                                args << new Reference(value.substring(1))
+                                args.add(new Reference(value.substring(1)))
                             }
                             else if (value.startsWith('.')) {
-                                args << container.getParameter(value.substring(1))
+                                args.add(new Parameter(value.substring(1)))
                             }
                             else {
-                                args << value
+                                args.add(value)
                             }
                         })
                     }

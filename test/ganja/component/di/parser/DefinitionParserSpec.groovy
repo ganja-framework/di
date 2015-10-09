@@ -2,6 +2,7 @@ package ganja.component.di.parser
 
 import ganja.common.di.ContainerInterface
 import ganja.common.di.DefinitionInterface
+import ganja.component.di.Parameter
 import spock.lang.Specification
 
 class DefinitionParserSpec extends Specification {
@@ -85,20 +86,28 @@ class DefinitionParserSpec extends Specification {
 
         given:
         def subject = new DefinitionParser()
-        ContainerInterface container = Mock() { getParameter('test') >> 'OK' }
-        DefinitionInterface definition = Mock()
+        ContainerInterface container = Mock()
+        DefinitionInterface definition1 = Mock()
+        DefinitionInterface definition2 = Mock()
 
         when:
         subject.parse(
             [ services: [
-                service1: [ class: 'support.ServiceWithConstructor', arguments: [ '.test' ]]
+                service1: [ class: 'support.ServiceWithConstructor', arguments: [ '.test' ]],
+                service2: [ class: 'support.Service', arguments: [ name: '.test' ]]
             ]],
             container
         )
 
         then:
-        1 * container.register('service1', _) >> definition
-        1 * definition.setArguments([ 'OK' ])
+        1 * container.register('service1', _) >> definition1
+        1 * container.register('service2', _) >> definition2
+        1 * definition1.setArguments(_) >> {
+            assert it[0][0] instanceof Parameter
+        }
+        1 * definition2.setArguments(_) >> {
+            assert it[0]['name'] instanceof Parameter
+        }
     }
 
     void 'it can parse service with method calls'() {
