@@ -86,7 +86,7 @@ class Container implements ContainerInterface {
         services[id] = service
     }
 
-    void setParameter(String id, String value) {
+    void setParameter(String id, def value) {
 
         parameters[id.toLowerCase()] = value
     }
