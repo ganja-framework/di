@@ -91,12 +91,12 @@ class Container implements ContainerInterface {
         parameters[id.toLowerCase()] = value
     }
 
-    String getParameter(Parameter parameter) {
+    def getParameter(Parameter parameter) {
 
         getParameter(parameter as String)
     }
 
-    String getParameter(String id) {
+    def getParameter(String id) {
 
         parameters[id.toLowerCase()]
     }
